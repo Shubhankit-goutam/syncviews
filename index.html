@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic YouTube Iframes with Borders</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .video-iframe {
+            border: 2px solid #000; /* Black border */
+            margin: 10px; /* Margin between iframes */
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-4">
+                <label for="video-id">Enter YouTube Video ID:</label>
+                <input type="text" class="form-control" id="video-id" value="An8Tqy4mbXY">
+                <button class="btn btn-primary mt-2" id="set-video-id">Video ID</button>
+            </div>
+            <div class="col-md-4">
+                <label for="iframe-count">Enter number of iframes to create:</label>
+                <input type="number" class="form-control" id="iframe-count" min="1" max="20" value="5">
+                <button class="btn btn-success mt-2" id="create-button">Create Window</button>
+            </div>
+            <div class="col-md-4">
+                <label for="decrease-count">Enter number of iframes to decrease:</label>
+                <input type="number" class="form-control" id="decrease-count" min="1" max="20" value="1">
+                <button class="btn btn-danger mt-2" id="decrease-button" disabled>Decrease Window</button>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-6">
+                <button class="btn btn-info" id="play-button" disabled>Play All Videos</button>
+            </div>
+            <div class="col-md-6">
+                <button class="btn btn-warning" id="pause-button" disabled>Pause All Videos</button>
+            </div>
+        </div>
+        <div class="row mt-6">
+            <div class="col-md-12">
+                <div id="video-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="youtube_script.js"></script>
+</body>
+</html>
