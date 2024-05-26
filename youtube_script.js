@@ -10,7 +10,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const setVideoIdButton = document.getElementById('set-video-id');
 
     function createIframes() {
-        const videoId = videoIdInput.value;
+        const parts = videoIdInput.value.split("/"); // Split the URL by "/"
+        const videoId = parts[parts.length - 1].split("?")[0]; // Get the last part and split it by "?" to remove the query parameters
+        console.log(videoId); 
         const existingIframeCount = videoContainer.childElementCount;
         const targetIframeCount = parseInt(iframeCountInput.value);
         const iframeIncrement = targetIframeCount - existingIframeCount;
