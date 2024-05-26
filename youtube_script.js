@@ -77,3 +77,37 @@ document.addEventListener('DOMContentLoaded', () => {
     pauseButton.addEventListener('click', pauseAllVideos);
     setVideoIdButton.addEventListener('click', setVideoId);
 });
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Function to get the time of day
+    function getTimeOfDay() {
+        const currentTime = new Date().getHours();
+        if (currentTime >= 5 && currentTime < 12) {
+            return 'Good morning';
+        } else if (currentTime >= 12 && currentTime < 18) {
+            return 'Good afternoon';
+        } else {
+            return 'Good evening';
+        }
+    }
+
+    // Function to display the welcome message 
+    function displayWelcomeMessage() {
+        const welcomeMessage = document.createElement('div');
+        welcomeMessage.className = 'alert alert-info text-center';
+        welcomeMessage.setAttribute('role', 'alert');
+        const currentTime = new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+        welcomeMessage.innerHTML = `<strong>${getTimeOfDay()},</strong> Welcome to SyncView!<br> ${currentTime} <button id="closeButton" class="btn btn-danger btn-sm ml-2">Close</button>`;
+        document.body.insertBefore(welcomeMessage, document.body.firstChild);
+
+        // Adding event listener to close button
+        const closeButton = document.getElementById('closeButton');
+        closeButton.addEventListener('click', function() {
+            welcomeMessage.style.display = 'none';
+        });
+    }
+
+    // Call the function to display the welcome message
+    displayWelcomeMessage();
+});

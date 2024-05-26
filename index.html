@@ -3,49 +3,218 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic YouTube Iframes with Borders</title>
+    <title> SyncView </title>
     <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
+        html {
+            scroll-behavior: smooth; /* Enable smooth scrolling */
+        }
         .video-iframe {
             border: 2px solid #000; /* Black border */
             margin: 10px; /* Margin between iframes */
+            width: 100%;
+            height: 315px; /* Standard YouTube embed height */
+        }
+        
+
+        /* Adjusting layout for large screens */
+@media (min-width: 992px) {
+    .video-container {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .video-iframe {
+        width: calc(33.33% - 10px); /* Three iframes per row with some space between */
+        margin: 5px;
+    }
+}
+
+/* Adjusting layout for small screens */
+@media (max-width: 991px) {
+    .video-iframe {
+        width: 100%; /* Full width on smaller screens */
+        margin-bottom: 10px;
+    }
+}
+
+
+        @media (max-width: 576px) {
+            .video-iframe {
+                height: 200px; /* Adjust height for smaller screens */
+            }
+        }
+        header, footer {
+            background-color: #f8f9fa;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .section {
+            margin-top: 50px;
+        }
+
+
+        /* Styling for sections */
+        .section {
+            padding: 50px 0;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd; /* Add border */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1); /* Add shadow */
+        }
+        h2 {
+            font-family: Arial, sans-serif; /* Change font family */
+            color: #333; /* Change font color */
+        }
+        p {
+            font-family: Arial, sans-serif; /* Change font family */
+            color: #666; /* Change font color */
+        }
+       
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        /* Secondary button */
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        .btn-secondary:hover {
+            background-color: #545b62;
         }
     </style>
 </head>
 <body>
+    
+    <header>
+        <div class="container">
+            <h1>
+                <i class="fas fa-sync-alt"></i> 
+                SyncView
+            </h1>
+            <nav class="nav justify-content-center">
+                <a class="nav-link" href="#about" data-scroll>
+                    About
+                    <i class="fas fa-info-circle"></i> <!-- About icon -->
+                </a>
+                <a class="nav-link" href="#contact" data-scroll>
+                    Contact
+                    <i class="fas fa-envelope"></i> <!-- Contact icon -->
+                </a>
+                <a class="nav-link" href="#buy-me-coffee" data-scroll>
+                    Buy Me a Coffee
+                    <i class="fas fa-coffee"></i> <!-- Coffee icon -->
+                </a>
+            </nav>
+        </div>
+    </header>
+
     <div class="container mt-5">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-sm-12 col-md-4 mb-3">
                 <label for="video-id">Enter YouTube Video ID:</label>
                 <input type="text" class="form-control" id="video-id" value="An8Tqy4mbXY">
-                <button class="btn btn-primary mt-2" id="set-video-id">Video ID</button>
+                <button class="btn btn-primary mt-2" id="set-video-id">Set Video ID</button>
             </div>
-            <div class="col-md-4">
-                <label for="iframe-count">Enter number of iframes to create:</label>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="iframe-count">Enter number of windows to create:</label>
                 <input type="number" class="form-control" id="iframe-count" min="1" max="20" value="5">
-                <button class="btn btn-success mt-2" id="create-button">Create Window</button>
+                <button class="btn btn-success mt-2" id="create-button">Create Windows</button>
             </div>
-            <div class="col-md-4">
-                <label for="decrease-count">Enter number of iframes to decrease:</label>
+            <div class="col-sm-12 col-md-4 mb-3">
+                <label for="decrease-count">Enter number of windows to decrease:</label>
                 <input type="number" class="form-control" id="decrease-count" min="1" max="20" value="1">
-                <button class="btn btn-danger mt-2" id="decrease-button" disabled>Decrease Window</button>
+                <button class="btn btn-danger mt-2" id="decrease-button" disabled>Decrease Windows</button>
             </div>
         </div>
         <div class="row mt-3">
-            <div class="col-md-6">
-                <button class="btn btn-info" id="play-button" disabled>Play All Videos</button>
+            <div class="col-6 col-md-6 mb-3">
+                <button class="btn btn-info btn-block" id="play-button" disabled>Play All Videos</button>
             </div>
-            <div class="col-md-6">
-                <button class="btn btn-warning" id="pause-button" disabled>Pause All Videos</button>
+            <div class="col-6 col-md-6 mb-3">
+                <button class="btn btn-warning btn-block" id="pause-button" disabled>Pause All Videos</button>
             </div>
         </div>
-        <div class="row mt-6">
+        <div class="row mt-3">
             <div class="col-md-12">
-                <div id="video-container"></div>
+                <div id="video-container" class="video-container"></div>
             </div>
         </div>
     </div>
+
+    <div id="about" class="section">
+        <div class="container">
+            <h2>About</h2>
+            <p>Welcome to SyncView! Our platform allows you to dynamically create and control multiple YouTube video windows. Enjoy synchronized video viewing with ease.</p>
+        </div>
+    </div>
+
+    <div id="contact" class="section">
+        <div class="container">
+            <h2>Contact</h2>
+            <p>If you have any questions or feedback, feel free to reach out to us at <a href="mailto:shubhankitkumar@gmail.com">shubhankitkumar@gmail.com</a>.</p>
+        </div>
+    </div>
+
+    <div id="buy-me-coffee" class="section">
+        <div class="container text-center">
+            <h2>Buy Me a Coffee</h2>
+            <p>If you enjoy using SyncView, consider buying me a coffee to support the development!</p>
+            <a href="https://www.buymeacoffee.com/yourusername" target="_blank" class="btn btn-primary">Buy Me a Coffee <i class="fas fa-coffee"></i></a>
+            <button class="btn btn-secondary" data-toggle="modal" data-target="#qrModal">Show QR Code</button>
+        </div>
+    </div>
+    <footer>
+        <div class="container">
+            <p>&copy; 2024   <i class="fas fa-sync-alt"></i>  SyncView</p>
+        </div>
+    </footer>
+
+    <!-- Modal -->
+    <div class="modal fade" id="qrModal" tabindex="-1" aria-labelledby="qrModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="qrModalLabel">Buy Me a Coffee - QR Code</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body text-center">
+                    <img src="./gpay.jpeg" alt="QR Code" class="img-fluid">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+       
+    </script>
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const scrollLinks = document.querySelectorAll('[data-scroll]');
+
+            scrollLinks.forEach(link => {
+                link.addEventListener('click', function(event) {
+                    event.preventDefault();
+                    const targetId = this.getAttribute('href').substring(1);
+                    const targetElement = document.getElementById(targetId);
+
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth' });
+                    }
+                }); 
+            });
+        });
+
+
+        
+    </script>
 
     <script src="youtube_script.js"></script>
 </body>
